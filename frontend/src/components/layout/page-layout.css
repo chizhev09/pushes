@@ -4,8 +4,8 @@
   --muted: #8b8b93;
   --line: #ebebef;
   --field: #f4f4f6;
-  --font: 'Montserrat', system-ui, sans-serif;
-  --rethink: 'Rethink Sans', var(--font), system-ui, sans-serif;
+  --font: 'Montserrat', system-ui, -apple-system, sans-serif;
+  --rethink: var(--font);
   --logo: 'Lobster Two', cursive;
 
   position: relative;
@@ -383,19 +383,50 @@
   color: #fff;
 }
 
-/* Telegram Mini App — на всю ширину WebView */
+/* Telegram Mini App — высота и отступы из WebApp API */
 html.tg-app,
 html.tg-app body,
-html.tg-app #root,
+html.tg-app #root {
+  height: var(--tg-viewport-height, 100dvh);
+  min-height: var(--tg-viewport-height, 100dvh);
+  overflow: hidden;
+}
+
 html.tg-app .main {
-  min-height: var(--tg-viewport-height, 100svh);
+  height: var(--tg-viewport-height, 100dvh);
+  min-height: var(--tg-viewport-height, 100dvh);
+  overflow: hidden;
 }
 
 html.tg-app .main__inner {
   max-width: none;
   width: 100%;
-  padding-left: max(24px, env(safe-area-inset-left, 0px));
-  padding-right: max(24px, env(safe-area-inset-right, 0px));
+  height: var(--tg-viewport-height, 100dvh);
+  min-height: var(--tg-viewport-height, 100dvh);
+  max-height: var(--tg-viewport-height, 100dvh);
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  padding-top: calc(
+    12px + var(--tg-content-top, 0px) + var(--tg-safe-top, env(safe-area-inset-top, 0px))
+  );
+  padding-bottom: calc(
+    88px + var(--tg-content-bottom, 0px) + var(--tg-safe-bottom, env(safe-area-inset-bottom, 0px))
+  );
+  padding-left: max(20px, var(--tg-safe-left, env(safe-area-inset-left, 0px)));
+  padding-right: max(20px, var(--tg-safe-right, env(safe-area-inset-right, 0px)));
+  box-sizing: border-box;
+}
+
+html.tg-app .main__top {
+  margin-bottom: 20px;
+}
+
+html.tg-app .main__hero {
+  flex: 0 1 auto;
+  justify-content: flex-start;
+  gap: 0;
+  min-height: 0;
 }
 
 html.tg-app .main__dock {
@@ -403,8 +434,11 @@ html.tg-app .main__dock {
   right: 0;
   max-width: none;
   transform: none;
-  padding-left: max(24px, env(safe-area-inset-left, 0px));
-  padding-right: max(24px, env(safe-area-inset-right, 0px));
+  bottom: calc(
+    12px + var(--tg-content-bottom, 0px) + var(--tg-safe-bottom, env(safe-area-inset-bottom, 0px))
+  );
+  padding-left: max(20px, var(--tg-safe-left, env(safe-area-inset-left, 0px)));
+  padding-right: max(20px, var(--tg-safe-right, env(safe-area-inset-right, 0px)));
 }
 
 /*
