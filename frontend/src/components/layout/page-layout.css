@@ -406,3 +406,151 @@ html.tg-app .main__dock {
   padding-left: max(24px, env(safe-area-inset-left, 0px));
   padding-right: max(24px, env(safe-area-inset-right, 0px));
 }
+
+/*
+  Мобильный WebView / узкий экран: blobs меньше (vmax), blur(80px) «съедает» цвет.
+  Ослабляем белую вуаль ::after и усиливаем сами градиенты.
+*/
+@media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  .main::after {
+    background: linear-gradient(
+      102deg,
+      transparent 0%,
+      transparent 52%,
+      rgba(255, 255, 255, 0.28) 72%,
+      rgba(255, 255, 255, 0.52) 88%,
+      rgba(255, 255, 255, 0.38) 100%
+    );
+  }
+
+  .main__glow-blob {
+    filter: blur(52px);
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  .main__glow-blob--violet {
+    width: 68vmax;
+    height: 70vmax;
+    background: radial-gradient(
+      ellipse 70% 65% at 48% 48%,
+      #e11d48 0%,
+      rgba(251, 113, 133, 0.9) 32%,
+      rgba(251, 113, 133, 0.45) 52%,
+      transparent 68%
+    );
+  }
+
+  .main__glow-blob--orange {
+    width: 62vmax;
+    height: 58vmax;
+    background: radial-gradient(
+      ellipse 68% 70% at 50% 50%,
+      #14b8a6 0%,
+      rgba(94, 234, 212, 0.88) 36%,
+      rgba(94, 234, 212, 0.4) 54%,
+      transparent 70%
+    );
+  }
+
+  .main__glow-blob--blue {
+    width: 60vmax;
+    height: 62vmax;
+    background: radial-gradient(
+      ellipse 65% 68% at 45% 52%,
+      #6366f1 0%,
+      rgba(165, 180, 252, 0.85) 34%,
+      rgba(165, 180, 252, 0.4) 52%,
+      transparent 72%
+    );
+  }
+
+  .main__glow-blob--corner-peach {
+    width: 50vmax;
+    height: 48vmax;
+    background: radial-gradient(
+      ellipse 70% 68% at 55% 55%,
+      #fbbf24 0%,
+      rgba(253, 186, 116, 0.85) 38%,
+      transparent 72%
+    );
+    opacity: 1;
+  }
+
+  .main__glow-blob--corner-lilac {
+    width: 44vmax;
+    height: 42vmax;
+    background: radial-gradient(
+      ellipse 68% 65% at 50% 50%,
+      #a855f7 0%,
+      rgba(216, 180, 254, 0.8) 40%,
+      transparent 70%
+    );
+    opacity: 0.95;
+  }
+
+  .main--tasks-glow::after {
+    background:
+      radial-gradient(
+        ellipse 55% 45% at 92% 8%,
+        rgba(255, 200, 130, 0.35) 0%,
+        transparent 68%
+      ),
+      linear-gradient(
+        145deg,
+        transparent 0%,
+        transparent 48%,
+        rgba(255, 255, 255, 0.22) 68%,
+        rgba(255, 255, 255, 0.48) 84%,
+        rgba(255, 255, 255, 0.36) 100%
+      );
+  }
+
+  .main--tasks-glow .main__glow-blob--violet {
+    background: radial-gradient(
+      ellipse 72% 68% at 42% 58%,
+      #ff6b00 0%,
+      rgba(255, 133, 51, 0.92) 34%,
+      rgba(255, 133, 51, 0.5) 52%,
+      transparent 70%
+    );
+  }
+
+  .main--tasks-glow .main__glow-blob--orange {
+    background: radial-gradient(
+      ellipse 70% 72% at 50% 55%,
+      #ff8c1a 0%,
+      rgba(255, 171, 77, 0.9) 38%,
+      transparent 72%
+    );
+  }
+
+  .main--tasks-glow .main__glow-blob--blue {
+    background: radial-gradient(
+      ellipse 68% 65% at 48% 52%,
+      #ffb347 0%,
+      rgba(253, 186, 116, 0.88) 38%,
+      transparent 72%
+    );
+  }
+
+  .main--tasks-glow .main__glow-blob--corner-peach {
+    opacity: 0.95;
+    background: radial-gradient(
+      ellipse 72% 70% at 58% 42%,
+      #ff8c1a 0%,
+      rgba(255, 171, 77, 0.82) 40%,
+      transparent 72%
+    );
+  }
+
+  .main--tasks-glow .main__glow-blob--corner-lilac {
+    opacity: 0.75;
+    background: radial-gradient(
+      ellipse 68% 65% at 50% 50%,
+      #ffb347 0%,
+      rgba(255, 214, 150, 0.7) 42%,
+      transparent 70%
+    );
+  }
+}
