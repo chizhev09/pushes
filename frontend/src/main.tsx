@@ -4,6 +4,10 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.tsx'
 import { bootstrapTelegram } from './lib/telegram.ts'
+import { setupBootTimeout, setupChunkReload } from './lib/boot-guard.ts'
+
+setupChunkReload()
+setupBootTimeout()
 
 function BootFallback() {
   return (
@@ -14,9 +18,7 @@ function BootFallback() {
   )
 }
 
-const rootEl = document.getElementById('root')!
-
-createRoot(rootEl).render(
+createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <BrowserRouter>
       <Suspense fallback={<BootFallback />}>
@@ -26,9 +28,6 @@ createRoot(rootEl).render(
   </StrictMode>,
 )
 
-document.documentElement.classList.add('app-ready')
-document.getElementById('boot')?.remove()
-
 void bootstrapTelegram().catch(() => {
-  /* обычный браузер — без Mini App */
+  /* обычный браузер */
 })

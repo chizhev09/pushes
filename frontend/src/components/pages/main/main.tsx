@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { AnimatePresence, motion } from 'framer-motion'
 import PageLayout from '../../layout/PageLayout.tsx'
 import PageHeader from '../../layout/PageHeader.tsx'
 import './main.css'
@@ -161,107 +160,72 @@ export default function Main() {
                   className={showIndicator ? 'main__field-input--pad' : ''}
                 />
                 <div className="main__field-indicator" aria-live="polite">
-                  <AnimatePresence mode="wait">
-                    {validateStatus === 'loading' && (
-                      <motion.span
-                        key="spinner"
-                        className="main__field-indicator-inner"
-                        initial={{ opacity: 0, scale: 0.85 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.85 }}
-                        transition={{ duration: 0.15 }}
-                      >
-                        <FieldSpinner />
-                      </motion.span>
-                    )}
-                    {validateStatus === 'valid' && (
-                      <motion.span
-                        key="check"
-                        className="main__field-indicator-inner"
-                        initial={{ opacity: 0, scale: 0.85 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.85 }}
-                        transition={{ duration: 0.15 }}
-                      >
-                        <FieldCheck />
-                      </motion.span>
-                    )}
-                  </AnimatePresence>
+                  {validateStatus === 'loading' && (
+                    <span className="main__field-indicator-inner main__fade-in">
+                      <FieldSpinner />
+                    </span>
+                  )}
+                  {validateStatus === 'valid' && (
+                    <span className="main__field-indicator-inner main__fade-in">
+                      <FieldCheck />
+                    </span>
+                  )}
                 </div>
               </div>
 
-              <AnimatePresence mode="wait">
-                {(validateStatus === 'loading' || validateStatus === 'invalid') && (
-                  <motion.div
-                    key="validate-slot"
-                    className="main__validate-slot"
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: 22, opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
-                  >
-                    {validateStatus === 'loading' && (
-                      <p className="main__validate-text main__validate-text--loading">
-                        Проверяем ссылку…
-                      </p>
-                    )}
-                    {validateStatus === 'invalid' && (
-                      <p className="main__validate-text main__validate-text--error">
-                        {validateMsg}
-                      </p>
-                    )}
-                  </motion.div>
-                )}
+              {(validateStatus === 'loading' || validateStatus === 'invalid') && (
+                <div className="main__validate-slot main__expand-open">
+                  {validateStatus === 'loading' && (
+                    <p className="main__validate-text main__validate-text--loading">
+                      Проверяем ссылку…
+                    </p>
+                  )}
+                  {validateStatus === 'invalid' && (
+                    <p className="main__validate-text main__validate-text--error">
+                      {validateMsg}
+                    </p>
+                  )}
+                </div>
+              )}
 
-                {validateStatus === 'valid' && (
-                  <motion.div
-                    key="task-settings"
-                    className="main__task-settings"
-                    initial={{ height: 0, opacity: 0, marginTop: 0 }}
-                    animate={{ height: 'auto', opacity: 1, marginTop: 14 }}
-                    exit={{ height: 0, opacity: 0, marginTop: 0 }}
-                    transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-                  >
-                    <p className="main__task-settings-title">Настройки задания:</p>
-                    <div className="main__task-options">
-                      {TASK_OPTIONS.map((opt) => (
-                        <button
-                          key={opt.key}
-                          type="button"
-                          className={`main__task-option${actions[opt.key] ? ' main__task-option--on' : ''}`}
-                          onClick={() => toggleAction(opt.key)}
-                          aria-pressed={actions[opt.key]}
-                        >
-                          <span>{opt.label}</span>
-                          <span className="main__task-option-cost">
-                            <svg
-                              width="12"
-                              height="12"
-                              viewBox="0 0 24 24"
-                              fill="currentColor"
-                              aria-hidden
-                            >
-                              <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" />
-                            </svg>
-                            {opt.cost}
-                          </span>
-                        </button>
-                      ))}
-                    </div>
-                  </motion.div>
-                )}
-              </AnimatePresence>
+              {validateStatus === 'valid' && (
+                <div className="main__task-settings main__expand-open main__task-settings--open">
+                  <p className="main__task-settings-title">Настройки задания:</p>
+                  <div className="main__task-options">
+                    {TASK_OPTIONS.map((opt) => (
+                      <button
+                        key={opt.key}
+                        type="button"
+                        className={`main__task-option${actions[opt.key] ? ' main__task-option--on' : ''}`}
+                        onClick={() => toggleAction(opt.key)}
+                        aria-pressed={actions[opt.key]}
+                      >
+                        <span>{opt.label}</span>
+                        <span className="main__task-option-cost">
+                          <svg
+                            width="12"
+                            height="12"
+                            viewBox="0 0 24 24"
+                            fill="currentColor"
+                            aria-hidden
+                          >
+                            <path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z" />
+                          </svg>
+                          {opt.cost}
+                        </span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
 
-            <motion.button
+            <button
               type="submit"
               className={`main__submit${done ? ' main__submit--ok' : ''}`}
-              whileHover={{ scale: 1.015 }}
-              whileTap={{ scale: 0.94 }}
-              transition={{ type: 'spring', stiffness: 500, damping: 28 }}
             >
               {done ? 'Добавлено ✓' : 'Добавить в задания →'}
-            </motion.button>
+            </button>
 
             <p className="main__note">
               * Деятельность Meta Platforms Inc. (соцсети Facebook и Instagram)
