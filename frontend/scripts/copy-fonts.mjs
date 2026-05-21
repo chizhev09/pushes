@@ -13,6 +13,7 @@ const files = [
   ['montserrat', 'montserrat-cyrillic-600-normal.woff2', 'Montserrat-600.woff2'],
   ['montserrat', 'montserrat-cyrillic-700-normal.woff2', 'Montserrat-700.woff2'],
   ['lobster-two', 'lobster-two-latin-400-normal.woff2', 'LobsterTwo-400.woff2'],
+  ['space-grotesk', 'space-grotesk-latin-700-normal.woff2', 'SpaceGrotesk-700.woff2'],
 ]
 
 mkdirSync(outDir, { recursive: true })

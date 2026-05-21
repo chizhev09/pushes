@@ -1,0 +1,57 @@
+/* Подпись Reels: гротеск + трендовая подложка-маркер */
+
+.reels-label {
+  --reels-font: 'Space Grotesk', var(--font), system-ui, sans-serif;
+
+  position: relative;
+  display: inline-block;
+  z-index: 0;
+  font-family: var(--reels-font);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  color: #0a0a0a;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* В заголовке «Добавь Reels» на главной */
+.reels-label--hero {
+  font-size: 1em;
+  line-height: inherit;
+  vertical-align: baseline;
+  letter-spacing: -0.07em;
+}
+
+.reels-label::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: -0.22em;
+  right: -0.28em;
+  bottom: 0.02em;
+  height: 0.62em;
+  border-radius: 8px;
+  transform: rotate(-2.8deg);
+  background: linear-gradient(
+    108deg,
+    #fef08a 0%,
+    #fdba74 38%,
+    #fb7185 72%,
+    #e879f9 100%
+  );
+  box-shadow: 0 2px 14px rgba(251, 113, 133, 0.28);
+}
+
+.reels-label::after {
+  content: '';
+  position: absolute;
+  z-index: -2;
+  left: -0.08em;
+  right: -0.12em;
+  bottom: -0.06em;
+  height: 0.5em;
+  border-radius: 6px;
+  transform: rotate(1.5deg);
+  background: linear-gradient(90deg, rgba(253, 224, 71, 0.45), rgba(251, 146, 60, 0.35));
+  opacity: 0.9;
+}

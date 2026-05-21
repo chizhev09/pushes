@@ -27,6 +27,5 @@ export function mountApp() {
 
   window.setTimeout(() => {
     void bootstrapTelegram().catch(() => undefined)
-    void import('./styles/fonts-extra.css')
   }, 0)
 }

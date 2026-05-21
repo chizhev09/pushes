@@ -6,5 +6,5 @@
 
 Не удаляй вручную после `fonts:copy` — только эти 5 файлов:
 
-- `Montserrat-400.woff2` … `700.woff2`
-- `LobsterTwo-400.woff2`
+- `Montserrat-400.woff2` … `700.woff2` — текст интерфейса
+- `LobsterTwo-400.woff2` — логотип «Pushes»

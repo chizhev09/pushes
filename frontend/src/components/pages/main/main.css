@@ -1,4 +1,5 @@
 @import '../../layout/page-layout.css';
+@import '../../../styles/reels-label.css';
 
 .main__hero {
   flex: 1;

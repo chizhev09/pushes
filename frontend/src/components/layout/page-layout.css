@@ -15,6 +15,36 @@
   background: var(--bg);
 }
 
+/* Фон: только CSS-градиенты, без blur/mask/5 div — легко для GPU */
+.main::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  /* 1 пятно — левый верхний угол; 2 пятна — снизу */
+  background:
+    radial-gradient(
+      ellipse 95% 80% at -6% -8%,
+      rgba(192, 132, 252, 0.78) 0%,
+      rgba(236, 72, 153, 0.38) 42%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 110% 90% at 12% 112%,
+      rgba(45, 212, 191, 0.82) 0%,
+      rgba(94, 234, 212, 0.42) 48%,
+      transparent 78%
+    ),
+    radial-gradient(
+      ellipse 112% 92% at 88% 110%,
+      rgba(249, 115, 22, 0.96) 0%,
+      rgba(255, 154, 50, 0.58) 44%,
+      rgba(253, 186, 116, 0.28) 62%,
+      transparent 80%
+    );
+}
+
 .main::after {
   content: '';
   position: fixed;
@@ -24,251 +54,45 @@
   background: linear-gradient(
     102deg,
     transparent 0%,
-    transparent 48%,
-    rgba(255, 255, 255, 0.45) 68%,
-    rgba(255, 255, 255, 0.78) 82%,
-    rgba(255, 255, 255, 0.6) 100%
+    transparent 50%,
+    rgba(255, 255, 255, 0.22) 72%,
+    rgba(255, 255, 255, 0.52) 86%,
+    rgba(255, 255, 255, 0.38) 100%
   );
 }
 
-.main__glow-corner {
-  position: fixed;
-  right: -20%;
-  bottom: -18%;
-  z-index: 0;
-  width: 55vmax;
-  height: 50vmax;
-  pointer-events: none;
-  overflow: visible;
-}
-
-.main__glow-blob--corner-peach {
-  right: 0;
-  bottom: 0;
-  left: auto;
-  top: auto;
-  width: 42vmax;
-  height: 40vmax;
-  border-radius: 52% 48% 40% 60% / 45% 55% 50% 50%;
-  background: radial-gradient(
-    ellipse 70% 68% at 55% 55%,
-    #fbbf24 0%,
-    rgba(253, 186, 116, 0.7) 40%,
-    transparent 72%
-  );
-  opacity: 0.92;
-}
-
-.main__glow-blob--corner-lilac {
-  right: 18%;
-  bottom: 28%;
-  left: auto;
-  top: auto;
-  width: 36vmax;
-  height: 34vmax;
-  border-radius: 48% 52% 58% 42% / 55% 45% 52% 48%;
-  background: radial-gradient(
-    ellipse 68% 65% at 50% 50%,
-    #a855f7 0%,
-    rgba(216, 180, 254, 0.65) 42%,
-    transparent 70%
-  );
-  opacity: 0.88;
-}
-
-.main__glow {
-  position: fixed;
-  inset: -30% -50% -30% -55%;
-  z-index: 0;
-  pointer-events: none;
-  overflow: visible;
-  -webkit-mask-image: linear-gradient(
-    100deg,
-    #000 0%,
-    #000 28%,
-    rgba(0, 0, 0, 0.75) 42%,
-    rgba(0, 0, 0, 0.35) 58%,
-    transparent 78%
-  );
-  mask-image: linear-gradient(
-    100deg,
-    #000 0%,
-    #000 28%,
-    rgba(0, 0, 0, 0.75) 42%,
-    rgba(0, 0, 0, 0.35) 58%,
-    transparent 78%
-  );
-}
-
-.main__glow-blob {
-  position: absolute;
-  filter: blur(80px);
-}
-
-.main__glow-blob--violet {
-  left: 0;
-  top: 5%;
-  width: 55vmax;
-  height: 58vmax;
-  border-radius: 44% 56% 62% 38% / 42% 48% 52% 58%;
-  background: radial-gradient(
-    ellipse 70% 65% at 48% 48%,
-    #e11d48 0%,
-    rgba(251, 113, 133, 0.75) 38%,
-    transparent 68%
-  );
-  opacity: 1;
-}
-
-.main__glow-blob--orange {
-  left: 12%;
-  top: 42%;
-  width: 50vmax;
-  height: 48vmax;
-  border-radius: 56% 44% 38% 62% / 50% 56% 44% 50%;
-  background: radial-gradient(
-    ellipse 68% 70% at 50% 50%,
-    #14b8a6 0%,
-    rgba(94, 234, 212, 0.7) 42%,
-    transparent 70%
-  );
-  opacity: 0.95;
-}
-
-.main__glow-blob--blue {
-  left: 22%;
-  top: 22%;
-  width: 48vmax;
-  height: 52vmax;
-  border-radius: 50% 50% 58% 42% / 52% 44% 56% 48%;
-  background: radial-gradient(
-    ellipse 65% 68% at 45% 52%,
-    #6366f1 0%,
-    rgba(165, 180, 252, 0.65) 40%,
-    transparent 72%
-  );
-  opacity: 0.92;
-}
-
-/* ── Tasks page: orange glow from bottom-left ── */
-.main--tasks-glow::after {
+/* Задания: оранжевое свечение снизу слева */
+.main--tasks-glow::before {
   background:
     radial-gradient(
-      ellipse 55% 45% at 92% 8%,
-      rgba(255, 200, 130, 0.22) 0%,
-      transparent 68%
+      ellipse 95% 80% at -6% -8%,
+      rgba(255, 171, 77, 0.68) 0%,
+      rgba(255, 200, 130, 0.34) 44%,
+      transparent 72%
     ),
-    linear-gradient(
-      145deg,
-      transparent 0%,
-      transparent 42%,
-      rgba(255, 255, 255, 0.35) 62%,
-      rgba(255, 255, 255, 0.72) 80%,
-      rgba(255, 255, 255, 0.55) 100%
+    radial-gradient(
+      ellipse 112% 92% at 10% 112%,
+      rgba(255, 107, 0, 0.88) 0%,
+      rgba(255, 133, 51, 0.5) 48%,
+      transparent 78%
+    ),
+    radial-gradient(
+      ellipse 114% 94% at 90% 110%,
+      rgba(255, 120, 0, 0.96) 0%,
+      rgba(255, 160, 40, 0.58) 44%,
+      rgba(255, 190, 90, 0.3) 62%,
+      transparent 80%
     );
 }
 
-.main--tasks-glow .main__glow {
-  inset: auto;
-  left: -48%;
-  bottom: -32%;
-  top: auto;
-  right: auto;
-  width: 100vmax;
-  height: 92vmax;
-  -webkit-mask-image: linear-gradient(
-    38deg,
-    #000 0%,
-    #000 32%,
-    rgba(0, 0, 0, 0.7) 48%,
-    rgba(0, 0, 0, 0.25) 62%,
-    transparent 78%
-  );
-  mask-image: linear-gradient(
-    38deg,
-    #000 0%,
-    #000 32%,
-    rgba(0, 0, 0, 0.7) 48%,
-    rgba(0, 0, 0, 0.25) 62%,
-    transparent 78%
-  );
-}
-
-.main--tasks-glow .main__glow-blob--violet {
-  left: 0;
-  bottom: 8%;
-  top: auto;
-  background: radial-gradient(
-    ellipse 72% 68% at 42% 58%,
-    #ff6b00 0%,
-    rgba(255, 133, 51, 0.8) 38%,
-    transparent 70%
-  );
-}
-
-.main--tasks-glow .main__glow-blob--orange {
-  left: 18%;
-  bottom: 0;
-  top: auto;
-  background: radial-gradient(
-    ellipse 70% 72% at 50% 55%,
-    #ff8c1a 0%,
-    rgba(255, 171, 77, 0.75) 42%,
-    transparent 72%
-  );
-}
-
-.main--tasks-glow .main__glow-blob--blue {
-  left: 8%;
-  bottom: 28%;
-  top: auto;
-  background: radial-gradient(
-    ellipse 68% 65% at 48% 52%,
-    #ffb347 0%,
-    rgba(253, 186, 116, 0.7) 40%,
-    transparent 72%
-  );
-}
-
-.main--tasks-glow .main__glow-corner {
-  right: -16%;
-  top: -14%;
-  bottom: auto;
-  left: auto;
-  width: 52vmax;
-  height: 46vmax;
-  opacity: 1;
-}
-
-.main--tasks-glow .main__glow-blob--corner-peach {
-  right: 0;
-  top: 0;
-  bottom: auto;
-  left: auto;
-  width: 38vmax;
-  height: 36vmax;
-  background: radial-gradient(
-    ellipse 72% 70% at 58% 42%,
-    #ff8c1a 0%,
-    rgba(255, 171, 77, 0.65) 42%,
-    transparent 72%
-  );
-  opacity: 0.8;
-}
-
-.main--tasks-glow .main__glow-blob--corner-lilac {
-  right: 12%;
-  top: 22%;
-  bottom: auto;
-  left: auto;
-  width: 32vmax;
-  height: 30vmax;
-  opacity: 0.55;
-  background: radial-gradient(
-    ellipse 68% 65% at 50% 50%,
-    #ffb347 0%,
-    rgba(255, 214, 150, 0.5) 45%,
-    transparent 70%
+.main--tasks-glow::after {
+  background: linear-gradient(
+    102deg,
+    transparent 0%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.22) 72%,
+    rgba(255, 255, 255, 0.52) 86%,
+    rgba(255, 255, 255, 0.38) 100%
   );
 }
 
@@ -294,10 +118,12 @@
 
 .main__logo {
   font-family: var(--logo);
-  font-size: 1.65rem;
+  font-size: clamp(2.25rem, 9.5vw, 2.625rem);
   font-weight: 400;
   line-height: 1;
-  letter-spacing: 0;
+  letter-spacing: 0.01em;
+  -webkit-font-smoothing: subpixel-antialiased;
+  text-rendering: geometricPrecision;
 }
 
 .main__top-pills {
@@ -452,163 +278,16 @@ html.tg-app .main__dock {
   padding-right: max(20px, var(--tg-safe-right, env(safe-area-inset-right, 0px)));
 }
 
-/*
-  Мобильный WebView / узкий экран: blobs меньше (vmax), blur(80px) «съедает» цвет.
-  Ослабляем белую вуаль ::after и усиливаем сами градиенты.
-*/
 @media (max-width: 768px), (hover: none) and (pointer: coarse) {
-  /* Lighthouse/мобилка: blur(50px) × 5 слоёв сильно бьёт по FCP/LCP */
-  .main__glow,
-  .main__glow-corner {
-    display: none;
-  }
-
-  .main {
-    background:
-      radial-gradient(ellipse 80% 60% at 10% 20%, rgba(225, 29, 72, 0.35), transparent 70%),
-      radial-gradient(ellipse 70% 55% at 85% 75%, rgba(251, 191, 36, 0.4), transparent 72%),
-      radial-gradient(ellipse 65% 50% at 40% 55%, rgba(99, 102, 241, 0.28), transparent 70%),
-      var(--bg);
-  }
-
-  .main::after {
+  .main::after,
+  .main--tasks-glow::after {
     background: linear-gradient(
       102deg,
       transparent 0%,
-      transparent 52%,
-      rgba(255, 255, 255, 0.28) 72%,
-      rgba(255, 255, 255, 0.52) 88%,
-      rgba(255, 255, 255, 0.38) 100%
-    );
-  }
-
-  .main__glow-blob {
-    filter: none;
-    will-change: auto;
-  }
-
-  .main__glow-blob--violet {
-    width: 68vmax;
-    height: 70vmax;
-    background: radial-gradient(
-      ellipse 70% 65% at 48% 48%,
-      #e11d48 0%,
-      rgba(251, 113, 133, 0.9) 32%,
-      rgba(251, 113, 133, 0.45) 52%,
-      transparent 68%
-    );
-  }
-
-  .main__glow-blob--orange {
-    width: 62vmax;
-    height: 58vmax;
-    background: radial-gradient(
-      ellipse 68% 70% at 50% 50%,
-      #14b8a6 0%,
-      rgba(94, 234, 212, 0.88) 36%,
-      rgba(94, 234, 212, 0.4) 54%,
-      transparent 70%
-    );
-  }
-
-  .main__glow-blob--blue {
-    width: 60vmax;
-    height: 62vmax;
-    background: radial-gradient(
-      ellipse 65% 68% at 45% 52%,
-      #6366f1 0%,
-      rgba(165, 180, 252, 0.85) 34%,
-      rgba(165, 180, 252, 0.4) 52%,
-      transparent 72%
-    );
-  }
-
-  .main__glow-blob--corner-peach {
-    width: 50vmax;
-    height: 48vmax;
-    background: radial-gradient(
-      ellipse 70% 68% at 55% 55%,
-      #fbbf24 0%,
-      rgba(253, 186, 116, 0.85) 38%,
-      transparent 72%
-    );
-    opacity: 1;
-  }
-
-  .main__glow-blob--corner-lilac {
-    width: 44vmax;
-    height: 42vmax;
-    background: radial-gradient(
-      ellipse 68% 65% at 50% 50%,
-      #a855f7 0%,
-      rgba(216, 180, 254, 0.8) 40%,
-      transparent 70%
-    );
-    opacity: 0.95;
-  }
-
-  .main--tasks-glow::after {
-    background:
-      radial-gradient(
-        ellipse 55% 45% at 92% 8%,
-        rgba(255, 200, 130, 0.35) 0%,
-        transparent 68%
-      ),
-      linear-gradient(
-        145deg,
-        transparent 0%,
-        transparent 48%,
-        rgba(255, 255, 255, 0.22) 68%,
-        rgba(255, 255, 255, 0.48) 84%,
-        rgba(255, 255, 255, 0.36) 100%
-      );
-  }
-
-  .main--tasks-glow .main__glow-blob--violet {
-    background: radial-gradient(
-      ellipse 72% 68% at 42% 58%,
-      #ff6b00 0%,
-      rgba(255, 133, 51, 0.92) 34%,
-      rgba(255, 133, 51, 0.5) 52%,
-      transparent 70%
-    );
-  }
-
-  .main--tasks-glow .main__glow-blob--orange {
-    background: radial-gradient(
-      ellipse 70% 72% at 50% 55%,
-      #ff8c1a 0%,
-      rgba(255, 171, 77, 0.9) 38%,
-      transparent 72%
-    );
-  }
-
-  .main--tasks-glow .main__glow-blob--blue {
-    background: radial-gradient(
-      ellipse 68% 65% at 48% 52%,
-      #ffb347 0%,
-      rgba(253, 186, 116, 0.88) 38%,
-      transparent 72%
-    );
-  }
-
-  .main--tasks-glow .main__glow-blob--corner-peach {
-    opacity: 0.95;
-    background: radial-gradient(
-      ellipse 72% 70% at 58% 42%,
-      #ff8c1a 0%,
-      rgba(255, 171, 77, 0.82) 40%,
-      transparent 72%
-    );
-  }
-
-  .main--tasks-glow .main__glow-blob--corner-lilac {
-    opacity: 0.75;
-    background: radial-gradient(
-      ellipse 68% 65% at 50% 50%,
-      #ffb347 0%,
-      rgba(255, 214, 150, 0.7) 42%,
-      transparent 70%
+      transparent 54%,
+      rgba(255, 255, 255, 0.18) 74%,
+      rgba(255, 255, 255, 0.42) 90%,
+      rgba(255, 255, 255, 0.32) 100%
     );
   }
 }
