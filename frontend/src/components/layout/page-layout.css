@@ -457,6 +457,20 @@ html.tg-app .main__dock {
   Ослабляем белую вуаль ::after и усиливаем сами градиенты.
 */
 @media (max-width: 768px), (hover: none) and (pointer: coarse) {
+  /* Lighthouse/мобилка: blur(50px) × 5 слоёв сильно бьёт по FCP/LCP */
+  .main__glow,
+  .main__glow-corner {
+    display: none;
+  }
+
+  .main {
+    background:
+      radial-gradient(ellipse 80% 60% at 10% 20%, rgba(225, 29, 72, 0.35), transparent 70%),
+      radial-gradient(ellipse 70% 55% at 85% 75%, rgba(251, 191, 36, 0.4), transparent 72%),
+      radial-gradient(ellipse 65% 50% at 40% 55%, rgba(99, 102, 241, 0.28), transparent 70%),
+      var(--bg);
+  }
+
   .main::after {
     background: linear-gradient(
       102deg,
@@ -469,9 +483,8 @@ html.tg-app .main__dock {
   }
 
   .main__glow-blob {
-    filter: blur(52px);
-    transform: translateZ(0);
-    will-change: transform;
+    filter: none;
+    will-change: auto;
   }
 
   .main__glow-blob--violet {

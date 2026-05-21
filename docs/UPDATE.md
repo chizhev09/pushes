@@ -93,6 +93,8 @@ git push origin master
 
 В `frontend/.gitignore`: `node_modules/`, `dist/` — их пушить не нужно.
 
+Шрифты: при `npm run build` копируются в `public/fonts/` (локально, без Google). На сервере после `npm ci && npm run build` проверь: `ls frontend/dist/fonts/`.
+
 ---
 
 ## 2. Обновить сайт на сервере (SSH)
