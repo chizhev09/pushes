@@ -35,3 +35,25 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.boot--inline {
+  min-height: 40vh;
+}
+
+.boot--inline::after {
+  content: '';
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin: 24px auto 0;
+  border: 2px solid #ebebef;
+  border-top-color: #ff6b00;
+  border-radius: 50%;
+  animation: boot-spin 0.7s linear infinite;
+}
+
+@keyframes boot-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

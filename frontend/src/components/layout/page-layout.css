@@ -383,30 +383,26 @@
   color: #fff;
 }
 
-/* Telegram Mini App — высота и отступы из WebApp API */
+/* Telegram Mini App — высота из WebApp (не 0px), без overflow:hidden */
 html.tg-app,
 html.tg-app body,
 html.tg-app #root {
-  height: var(--tg-viewport-height, 100dvh);
   min-height: var(--tg-viewport-height, 100dvh);
-  overflow: hidden;
+  height: auto;
 }
 
 html.tg-app .main {
-  height: var(--tg-viewport-height, 100dvh);
   min-height: var(--tg-viewport-height, 100dvh);
-  overflow: hidden;
+  height: auto;
 }
 
 html.tg-app .main__inner {
   max-width: none;
   width: 100%;
-  height: var(--tg-viewport-height, 100dvh);
   min-height: var(--tg-viewport-height, 100dvh);
-  max-height: var(--tg-viewport-height, 100dvh);
-  overflow-y: auto;
+  height: auto;
+  max-height: none;
   overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
   padding-top: calc(
     12px + var(--tg-content-top, 0px) + var(--tg-safe-top, env(safe-area-inset-top, 0px))
   );

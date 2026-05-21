@@ -1,16 +1,34 @@
-import { StrictMode } from 'react'
+import { StrictMode, Suspense } from 'react'
 import { createRoot } from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App.tsx'
-import { initTelegramApp } from './lib/telegram.ts'
+import { bootstrapTelegram } from './lib/telegram.ts'
 
-initTelegramApp()
+function BootFallback() {
+  return (
+    <div className="boot" role="status" aria-live="polite">
+      <span className="boot__logo">Pushes</span>
+      <span className="boot__spinner" aria-hidden />
+    </div>
+  )
+}
 
-createRoot(document.getElementById('root')!).render(
+const rootEl = document.getElementById('root')!
+
+createRoot(rootEl).render(
   <StrictMode>
     <BrowserRouter>
-      <App />
+      <Suspense fallback={<BootFallback />}>
+        <App />
+      </Suspense>
     </BrowserRouter>
   </StrictMode>,
 )
+
+document.documentElement.classList.add('app-ready')
+document.getElementById('boot')?.remove()
+
+void bootstrapTelegram().catch(() => {
+  /* обычный браузер — без Mini App */
+})

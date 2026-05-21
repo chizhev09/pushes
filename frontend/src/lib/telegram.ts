@@ -25,8 +25,15 @@ declare global {
   }
 }
 
+const TG_SCRIPT = 'https://telegram.org/js/telegram-web-app.js'
+
 export function isTelegramMiniApp() {
   return Boolean(window.Telegram?.WebApp?.initData)
+}
+
+function viewportHeightPx(tg: NonNullable<typeof window.Telegram>['WebApp']) {
+  const fromTg = tg.viewportStableHeight || tg.viewportHeight || 0
+  return Math.max(fromTg, window.innerHeight, 320)
 }
 
 function applySafeArea(tg: NonNullable<typeof window.Telegram>['WebApp']) {
@@ -45,11 +52,7 @@ function applySafeArea(tg: NonNullable<typeof window.Telegram>['WebApp']) {
   }
 }
 
-/** Подготовка Mini App: viewport Telegram + safe area, без requestFullscreen */
-export function initTelegramApp() {
-  const tg = window.Telegram?.WebApp
-  if (!tg) return false
-
+function bindTelegramLayout(tg: NonNullable<typeof window.Telegram>['WebApp']) {
   tg.ready()
   tg.expand()
 
@@ -63,18 +66,40 @@ export function initTelegramApp() {
   document.documentElement.classList.add('tg-app')
 
   const setViewportVars = () => {
-    const h = tg.viewportStableHeight || tg.viewportHeight
-    document.documentElement.style.setProperty('--tg-viewport-height', `${h}px`)
+    document.documentElement.style.setProperty(
+      '--tg-viewport-height',
+      `${viewportHeightPx(tg)}px`,
+    )
     applySafeArea(tg)
   }
 
   setViewportVars()
-
-  const onViewport = () => setViewportVars()
-  tg.onEvent?.('viewportChanged', onViewport)
-  window.addEventListener('resize', onViewport)
-
-  return true
+  tg.onEvent?.('viewportChanged', setViewportVars)
+  window.addEventListener('resize', setViewportVars)
 }
 
-export {}
+/** Скрипт Telegram не блокирует первый экран — подгружается после старта приложения */
+export async function bootstrapTelegram() {
+  if (!window.Telegram?.WebApp) {
+    await new Promise<void>((resolve, reject) => {
+      const existing = document.querySelector(`script[src="${TG_SCRIPT}"]`)
+      if (existing) {
+        existing.addEventListener('load', () => resolve(), { once: true })
+        existing.addEventListener('error', () => reject(), { once: true })
+        return
+      }
+      const script = document.createElement('script')
+      script.src = TG_SCRIPT
+      script.async = true
+      script.onload = () => resolve()
+      script.onerror = () => reject(new Error('telegram-web-app.js failed'))
+      document.head.appendChild(script)
+    })
+  }
+
+  const tg = window.Telegram?.WebApp
+  if (!tg?.initData) return false
+
+  bindTelegramLayout(tg)
+  return true
+}
